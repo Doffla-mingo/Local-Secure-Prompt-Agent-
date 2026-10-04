@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+
+  "name": "Privacy Agent",
+
+  "version": "2.0.0",
+
+  "description": "Local privacy protection for AI chat applications.",
+
+  "permissions": [
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://*.openai.com/*",
+    "https://claude.ai/*",
+    "https://gemini.google.com/*",
+    "https://copilot.microsoft.com/*",
+    "https://www.perplexity.ai/*",
+    "https://poe.com/*",
+    "https://grok.com/*"
+  ],
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://*.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://copilot.microsoft.com/*",
+        "https://www.perplexity.ai/*",
+        "https://poe.com/*",
+        "https://grok.com/*"
+      ],
+      "js": [
+        "compromise.js",
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

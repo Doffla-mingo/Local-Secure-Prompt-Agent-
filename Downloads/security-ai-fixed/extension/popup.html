@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Privacy Agent</title>
+
+    <style>
+        body {
+            width: 340px;
+            padding: 20px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+        }
+
+        h2 {
+            margin: 0 0 5px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .status {
+            padding: 12px;
+            background: #dcfce7;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .section-hint {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: -8px;
+            margin-bottom: 12px;
+        }
+
+        .setting {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .setting label {
+            font-size: 14px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .card {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .number {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .label {
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .term-input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .term-input-row input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .term-input-row button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .term-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .term-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .term-item button {
+            border: none;
+            background: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 13px;
+            padding: 0 4px;
+        }
+
+        .empty-terms {
+            color: #94a3b8;
+            font-size: 12px;
+            text-align: center;
+            padding: 8px 0;
+        }
+
+        button#reset {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #e2e8f0;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>🛡 Privacy Agent</h2>
+
+    <div class="subtitle">
+        Local privacy protection
+    </div>
+
+    <div class="status">
+        🟢 Protection Active
+    </div>
+
+
+    <!-- PERSONAL TERMS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            My Personal Terms
+        </div>
+
+        <div class="section-hint">
+            Always redact these exact words, regardless of context
+            (e.g. your own name, employer, or city).
+        </div>
+
+        <div class="setting">
+            <label>Enabled</label>
+            <input type="checkbox" id="customTermsToggle">
+        </div>
+
+        <div class="term-input-row">
+            <input type="text" id="termInput" placeholder="e.g. Ajay Sharma">
+            <button id="addTerm">Add</button>
+        </div>
+
+        <div class="term-list" id="termList">
+            <!-- populated by popup.js -->
+        </div>
+
+    </div>
+
+
+    <!-- SETTINGS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Protection Settings
+        </div>
+
+        <div class="setting">
+            <label>Email</label>
+            <input type="checkbox" id="emailToggle">
+        </div>
+
+        <div class="setting">
+            <label>Phone</label>
+            <input type="checkbox" id="phoneToggle">
+        </div>
+
+        <div class="setting">
+            <label>API Keys</label>
+            <input type="checkbox" id="apiKeyToggle">
+        </div>
+
+        <div class="setting">
+            <label>Secrets</label>
+            <input type="checkbox" id="secretToggle">
+        </div>
+
+        <div class="setting">
+            <label>Aadhaar</label>
+            <input type="checkbox" id="aadhaarToggle">
+        </div>
+
+        <div class="setting">
+            <label>PAN</label>
+            <input type="checkbox" id="panToggle">
+        </div>
+
+        <div class="setting">
+            <label>IP Address</label>
+            <input type="checkbox" id="ipToggle">
+        </div>
+
+        <div class="setting">
+            <label>Passwords</label>
+            <input type="checkbox" id="passwordToggle">
+        </div>
+
+        <div class="setting">
+            <label>Names</label>
+            <input type="checkbox" id="namesToggle">
+        </div>
+
+        <div class="setting">
+            <label>Locations</label>
+            <input type="checkbox" id="locationsToggle">
+        </div>
+
+        <div class="setting">
+            <label>Organizations</label>
+            <input type="checkbox" id="organizationsToggle">
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Protected Data
+        </div>
+
+        <div class="stats">
+
+            <div class="card">
+                <div class="number" id="email">
+                    0
+                </div>
+
+                <div class="label">
+                    Emails
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="number" id="phone">
+                    0
+                </div>
+
+                <div class="label">
+                    Phones
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="number" id="apiKey">
+                    0
+                </div>
+
+                <div class="label">
+                    API Keys
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="number" id="secret">
+                    0
+                </div>
+
+                <div class="label">
+                    Secrets
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="aadhaar">
+                    0
+                </div>
+
+                <div class="label">
+                    Aadhaar
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="pan">
+                    0
+                </div>
+
+                <div class="label">
+                    PAN
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="ip">
+                    0
+                </div>
+
+                <div class="label">
+                    IP Addresses
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="password">
+                    0
+                </div>
+
+                <div class="label">
+                    Passwords
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="name">
+                    0
+                </div>
+
+                <div class="label">
+                    Names
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="location">
+                    0
+                </div>
+
+                <div class="label">
+                    Locations
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="organization">
+                    0
+                </div>
+
+                <div class="label">
+                    Organizations
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="number" id="custom">
+                    0
+                </div>
+
+                <div class="label">
+                    Personal Terms
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button id="reset">
+        Reset Statistics
+    </button>
+
+
+    <script src="popup.js"></script>
+
+</body>
+
+</html>
